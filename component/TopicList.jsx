@@ -5,21 +5,21 @@ import Link from 'next/link';
 import { HiPencilAlt } from 'react-icons/hi';
 
 
-const TopicList = () => {
+const TopicList = ({title,description,id}) => {
     return (
         <div>
             <div
                 className="topiclist_container"
             >
                 <div>
-                    <h2 className="font-bold text-2xl">Lorem ipsum dolor sit amet.</h2>
-                    <div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis, nisi.</div>
+                    <h2 className="font-bold text-2xl">{title}.</h2>
+                    <div>{description}</div>
                 </div>
 
                 <div className="flex gap-2">
                     <RemoveBtn />
 
-                    <Link href={`/editTopic/${2}`}>
+                    <Link href={`/editTopic/${id}`}>
                         <HiPencilAlt size={24} />
                     </Link>
                 </div>
