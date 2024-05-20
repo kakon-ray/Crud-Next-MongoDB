@@ -28,9 +28,10 @@ const TopicList = async () => {
 
 
     const { product } = await getTopics();
+    console.log(product)
 
     return (<>
-      {product.map((item) => (
+      {product?.map((item) => (
         <div  key={item._id}>
             <div
                 className="topiclist_container"

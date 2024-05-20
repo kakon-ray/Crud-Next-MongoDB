@@ -1,47 +1,25 @@
-"use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import '../../addTopic/addTopic.css'
-const page = () => {
+import EditForm from "@/component/EditForm";
 
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-  
-    const router = useRouter();
-  
-    const handleSubmit = async (e) => {
-    };
+const getTopicById = async (id) => {
+  try {
+    const res = await fetch(`http://localhost:3000/api/product/${id}`, {
+      cache: "no-store",
+    });
 
+    if (!res.ok) {
+      throw new Error("Failed to fetch topic");
+    }
 
-    return (
-        <div className="card">
-            <h2 className="text-center py-5 text-xl">Edit Topic</h2>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-                <input
-                    onChange={(e) => setTitle(e.target.value)}
-                    value={title}
-                    className="border border-slate-500 px-8 py-2"
-                    type="text"
-                    placeholder="Topic Title"
-                />
-
-                <input
-                    onChange={(e) => setDescription(e.target.value)}
-                    value={description}
-                    className="border border-slate-500 px-8 py-2"
-                    type="text"
-                    placeholder="Topic Description"
-                />
-
-                <button
-                    type="submit"
-                    className="bg-green-600 font-bold text-white py-3 px-6 w-fit"
-                >
-                    Update
-                </button>
-            </form>
-        </div>
-    );
+    return res.json();
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-export default page;
+export default async function page({ params }) {
+  const { id } = params;
+  const { product } = await getTopicById(id);
+  const { title, description } = product;
+
+  return <EditForm id={id} title={title} description={description} />;
+}
